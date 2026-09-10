@@ -6,9 +6,7 @@
   <title>BD News 24 - Admin Panel</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -48,9 +46,7 @@
       margin-top: 15px;
     }
 
-    input,
-    select,
-    textarea {
+    input, select, textarea {
       width: 100%;
       padding: 12px;
       margin-top: 7px;
@@ -81,6 +77,10 @@
       background: #b9151b;
     }
 
+    .logout {
+      background: #333;
+    }
+
     .note {
       background: #fff3cd;
       padding: 12px;
@@ -92,6 +92,10 @@
     #message {
       margin-top: 15px;
       font-weight: bold;
+    }
+
+    #adminPanel {
+      display: none;
     }
 
     @media(max-width:600px) {
@@ -111,191 +115,7 @@
 
   <div class="container">
 
-    <div class="box">
+    <!-- LOGIN -->
+    <div class="box" id="loginBox">
 
-      <h2>নতুন সংবাদ প্রকাশ</h2>
-
-      <label>সংবাদের শিরোনাম</label>
-      <input
-        type="text"
-        id="title"
-        placeholder="সংবাদের শিরোনাম লিখুন"
-      >
-
-      <label>ক্যাটাগরি</label>
-      <select id="category">
-        <option value="বাংলাদেশ">বাংলাদেশ</option>
-        <option value="আন্তর্জাতিক">আন্তর্জাতিক</option>
-        <option value="খেলাধুলা">খেলাধুলা</option>
-        <option value="বিনোদন">বিনোদন</option>
-        <option value="প্রযুক্তি">প্রযুক্তি</option>
-      </select>
-
-      <label>ছবির URL</label>
-      <input
-        type="url"
-        id="imageUrl"
-        placeholder="https://example.com/image.jpg"
-      >
-
-      <label>সংক্ষিপ্ত বিবরণ</label>
-      <textarea
-        id="summary"
-        placeholder="সংবাদের সংক্ষিপ্ত বিবরণ লিখুন"
-      ></textarea>
-
-      <label>পূর্ণ সংবাদ</label>
-      <textarea
-        id="content"
-        placeholder="পূর্ণ সংবাদ লিখুন"
-      ></textarea>
-
-      <label>
-        <input
-          type="checkbox"
-          id="featured"
-          style="width:auto"
-        >
-        প্রধান সংবাদ হিসেবে দেখান
-      </label>
-
-      <button onclick="publishNews()">
-        📰 সংবাদ প্রকাশ করুন
-      </button>
-
-      <div id="message"></div>
-
-      <div class="note">
-        💡 ছবির URL এখানে দিতে হবে। Firebase Storage ব্যবহার না করেও
-        এই পদ্ধতিতে সংবাদ প্রকাশ করা যাবে।
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-
-  <script>
-
-    // এখানে তোমার Firebase Config বসাতে হবে
-    const firebaseConfig = {
-
-      apiKey: "YOUR_API_KEY",
-
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-
-      projectId: "YOUR_PROJECT_ID",
-
-      storageBucket: "YOUR_PROJECT.appspot.com",
-
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-
-      appId: "YOUR_APP_ID"
-
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
-    const db = firebase.firestore();
-
-
-    async function publishNews() {
-
-      const title =
-        document.getElementById("title").value.trim();
-
-      const category =
-        document.getElementById("category").value;
-
-      const imageUrl =
-        document.getElementById("imageUrl").value.trim();
-
-      const summary =
-        document.getElementById("summary").value.trim();
-
-      const content =
-        document.getElementById("content").value.trim();
-
-      const featured =
-        document.getElementById("featured").checked;
-
-      const message =
-        document.getElementById("message");
-
-
-      if (!title || !summary || !content) {
-
-        message.style.color = "red";
-
-        message.innerText =
-          "শিরোনাম, সংক্ষিপ্ত বিবরণ এবং পূর্ণ সংবাদ লিখুন।";
-
-        return;
-      }
-
-
-      message.style.color = "#333";
-
-      message.innerText =
-        "সংবাদ প্রকাশ হচ্ছে...";
-
-
-      try {
-
-        await db.collection("news").add({
-
-          title: title,
-
-          category: category,
-
-          imageUrl: imageUrl,
-
-          summary: summary,
-
-          content: content,
-
-          featured: featured,
-
-          createdAt:
-            firebase.firestore.FieldValue.serverTimestamp()
-
-        });
-
-
-        message.style.color = "green";
-
-        message.innerText =
-          "✅ সংবাদ সফলভাবে প্রকাশ হয়েছে!";
-
-
-        document.getElementById("title").value = "";
-
-        document.getElementById("imageUrl").value = "";
-
-        document.getElementById("summary").value = "";
-
-        document.getElementById("content").value = "";
-
-        document.getElementById("featured").checked = false;
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        message.style.color = "red";
-
-        message.innerText =
-          "❌ সংবাদ প্রকাশ হয়নি। Firebase Config পরীক্ষা করুন।";
-
-      }
-
-    }
-
-  </script>
-
-</body>
-  </html>
+      <h2>🔐 Admin Login</h
